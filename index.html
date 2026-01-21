@@ -42,12 +42,12 @@
             border: none;
             background: none;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px; /* Aumentado levemente */
+            font-weight: 700;
             color: #555;
             transition: 0.3s;
             border-bottom: 4px solid transparent;
-            min-width: 100px;
+            min-width: 120px;
         }
         .tab-btn:hover {
             background-color: #e0e0e0;
@@ -68,7 +68,7 @@
             display: block;
         }
 
-        /* --- SUB-ABAS (PRODUTOS) --- */
+        /* --- SUB-ABAS (GERAL: PRODUTOS E TÉCNICAS) --- */
         .sub-tab-bar {
             display: flex;
             justify-content: center;
@@ -102,6 +102,15 @@
             animation: fadeIn 0.4s;
         }
         .sub-tab-content.active {
+            display: block;
+        }
+        
+        /* Classe específica para sub-abas de vendas para não conflitar com produtos */
+        .sales-tab-content {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+        .sales-tab-content.active {
             display: block;
         }
 
@@ -274,21 +283,30 @@
         .audit-list li::before { content: "•"; position: absolute; left: 0; color: #b71c1c; font-weight: bold; }
         .audit-users { margin-top: 15px; padding-top: 10px; border-top: 1px dashed #ddd; font-size: 0.85em; color: #777; font-style: italic; }
 
-        /* NDDD GERENCIAL BOX */
-        .nddd-highlight {
-            background: #fff8e1; /* Fundo amarelo claro */
-            border: 2px solid #ff6f00;
+        /* NDDD & MEDMETRICS BOXES */
+        .nddd-highlight, .medmetrics-highlight {
             border-radius: 8px;
             padding: 25px;
             margin-bottom: 40px;
             position: relative;
         }
+        /* NDDD Specifics */
+        .nddd-highlight { background: #fff8e1; border: 2px solid #ff6f00; }
         .nddd-highlight h4 { color: #e65100; margin-top: 0; font-size: 1.4em; border-bottom: 1px solid #ffe082; padding-bottom: 10px; margin-bottom: 15px; }
         .nddd-desc { font-style: italic; color: #5d4037; margin-bottom: 20px; line-height: 1.5; }
         .nddd-grid { display: flex; flex-wrap: wrap; gap: 20px; }
         .nddd-item { flex: 1; min-width: 220px; background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #ff8f00; }
         .nddd-item strong { color: #e65100; display: block; margin-bottom: 5px; font-size: 0.95em; text-transform: uppercase; }
         .nddd-item span { color: #555; font-size: 0.9em; }
+
+        /* MedMetrics Specifics */
+        .medmetrics-highlight { background: #fce4ec; border: 2px solid #ec407a; }
+        .medmetrics-highlight h4 { color: #880e4f; margin-top: 0; font-size: 1.4em; border-bottom: 1px solid #f8bbd0; padding-bottom: 10px; margin-bottom: 15px; }
+        .medmetrics-desc { font-style: italic; color: #5d4037; margin-bottom: 20px; line-height: 1.5; }
+        .medmetrics-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+        .medmetrics-item { flex: 1; min-width: 220px; background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #ec407a; }
+        .medmetrics-item strong { color: #880e4f; display: block; margin-bottom: 5px; font-size: 0.95em; text-transform: uppercase; }
+        .medmetrics-item span { color: #555; font-size: 0.9em; }
 
         /* ESTILOS PARA NOVA ABA CAT (PIRÂMIDE) */
         .cat-pillars { display: flex; gap: 15px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
@@ -333,8 +351,8 @@
         
         @media print {
             .btn-print, .tab-bar, .sub-tab-bar, .internal-toggle-bar { display: none; }
-            .tab-content, .sub-tab-content, .internal-section { display: block !important; border-bottom: 2px solid #000; page-break-after: always; }
-            .audit-card, .pyramid-container, .link-grid, .nddd-highlight { break-inside: avoid; }
+            .tab-content, .sub-tab-content, .internal-section, .sales-tab-content { display: block !important; border-bottom: 2px solid #000; page-break-after: always; }
+            .audit-card, .pyramid-container, .link-grid, .nddd-highlight, .medmetrics-highlight { break-inside: avoid; }
             .link-btn { border: 1px solid #000; }
             .internal-section { display: block !important; }
         }
@@ -350,36 +368,107 @@
     </header>
 
     <div class="tab-bar">
-        <button class="tab-btn active" onclick="openTab(event, 'conceito')">1. Resumo PSP</button>
-        <button class="tab-btn" onclick="openTab(event, 'produtos')">2. Produtos</button>
-        <button class="tab-btn" onclick="openTab(event, 'perguntas')">3. Perguntas</button>
-        <button class="tab-btn" onclick="openTab(event, 'objecoes')">4. Objeções (3D's)</button>
-        <button class="tab-btn" onclick="openTab(event, 'estrutura')">5. Estrutura Visita</button>
-        <button class="tab-btn" onclick="openTab(event, 'conclusao')">6. Conclusão</button>
-        <button class="tab-btn" onclick="openTab(event, 'auditorias')">7. Auditorias</button>
-        <button class="tab-btn" onclick="openTab(event, 'cat')">8. Categorização (CAT)</button>
-        <button class="tab-btn" onclick="openTab(event, 'links')">9. Links Importantes</button>
+        <button class="tab-btn active" onclick="openTab(event, 'tecnicas_vendas')">1. TÉCNICAS DE VENDAS</button>
+        <button class="tab-btn" onclick="openTab(event, 'produtos')">2. PRODUTOS</button>
+        <button class="tab-btn" onclick="openTab(event, 'auditorias')">3. Auditorias</button>
+        <button class="tab-btn" onclick="openTab(event, 'cat')">4. Categorização</button>
+        <button class="tab-btn" onclick="openTab(event, 'links')">5. Links Importantes</button>
     </div>
 
-    <div id="conceito" class="tab-content active">
-        <h2>A Lógica do PSP</h2>
-        <p>Organize a energia da visita para garantir segurança.</p>
+    <div id="tecnicas_vendas" class="tab-content active">
+        <h2 style="text-align:center; border:none; margin-bottom:10px;">Metodologia de Vendas</h2>
         
-        <div class="box-concept">
-            <span class="badge badge-p">P - POSITIVO</span> Início: Fale do produto que ele JÁ usa.
-        </div>
-        <div class="box-concept">
-            <span class="badge badge-s">S - SENSÍVEL</span> Meio: A venda real. Sondagem + Pitch.
-        </div>
-        <div class="box-concept">
-            <span class="badge badge-p">P - POSITIVO</span> Fim: Retorno ao produto seguro.
+        <div class="sub-tab-bar">
+            <button class="sub-tab-btn active" onclick="openSalesTab(event, 'conceito')">Resumo PSP</button>
+            <button class="sub-tab-btn" onclick="openSalesTab(event, 'perguntas')">Perguntas</button>
+            <button class="sub-tab-btn" onclick="openSalesTab(event, 'objecoes')">Objeções (3D's)</button>
+            <button class="sub-tab-btn" onclick="openSalesTab(event, 'estrutura')">Estrutura Visita</button>
+            <button class="sub-tab-btn" onclick="openSalesTab(event, 'conclusao')">Conclusão</button>
         </div>
 
-        <div style="background: #fff3e0; padding: 15px; border: 1px solid #ffb74d; text-align: center; border-radius: 5px;">
-            ⚠️ <strong>Regra de Ouro:</strong> "CONFIRMAR sem AGRADECER"
+        <div id="conceito" class="sales-tab-content active">
+            <h2>A Lógica do PSP</h2>
+            <p>Organize a energia da visita para garantir segurança.</p>
+            
+            <div class="box-concept">
+                <span class="badge badge-p">P - POSITIVO</span> Início: Fale do produto que ele JÁ usa.
+            </div>
+            <div class="box-concept">
+                <span class="badge badge-s">S - SENSÍVEL</span> Meio: A venda real. Sondagem + Pitch.
+            </div>
+            <div class="box-concept">
+                <span class="badge badge-p">P - POSITIVO</span> Fim: Retorno ao produto seguro.
+            </div>
+
+            <div style="background: #fff3e0; padding: 15px; border: 1px solid #ffb74d; text-align: center; border-radius: 5px;">
+                ⚠️ <strong>Regra de Ouro:</strong> "CONFIRMAR sem AGRADECER"
+            </div>
+        </div>
+
+        <div id="perguntas" class="sales-tab-content">
+            <h2>Perguntas de Sondagem</h2>
+            <div class="question-card">
+                <h4>Alektos (Alergia)</h4>
+                <p>"Doutor, qual sua prioridade ao escolher um anti-histamínico: potência de ação ou perfil de segurança em pacientes polimedicados?"</p>
+            </div>
+            <div class="question-card">
+                <h4>Kelac (Dor)</h4>
+                <p>"Quando o anti-inflamatório comum não segura a dor, qual sua conduta antes do opioide?"</p>
+            </div>
+            <div class="question-card">
+                <h4>Descon (Gripe)</h4>
+                <p>"Como o senhor maneja sintomas gripais em pacientes que dirigem e não podem ter sonolência?"</p>
+            </div>
+        </div>
+
+        <div id="objecoes" class="sales-tab-content">
+            <h2>Tratamento de Objeções (3 D's)</h2>
+            <div class="d-container">
+                <div class="d-card">
+                    <span class="d-letter">D</span>
+                    <span class="d-title">Desconhece</span>
+                    <div class="solution-box"><strong>Ação: Educar.</strong> "Sabia que Alektos é nota 10 no ARIA e age em 1h?"</div>
+                </div>
+                <div class="d-card">
+                    <span class="d-letter">D</span>
+                    <span class="d-title">Desconfia</span>
+                    <div class="solution-box"><strong>Ação: Investigar.</strong> "Em que perfil de paciente o senhor teve receio com segurança?"</div>
+                </div>
+                <div class="d-card">
+                    <span class="d-letter">D</span>
+                    <span class="d-title">Desvantagem</span>
+                    <div class="solution-box"><strong>Ação: Ressignificar.</strong> "O custo é mais acessível que as referências Fexo e Deslora."</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="estrutura" class="sales-tab-content">
+            <h2>Passo a Passo da Visita</h2>
+            <div class="timeline">
+                <div class="timeline-item"><div class="timeline-number">1</div><div class="timeline-content"><h4>Conexão</h4><p>Rapport e Quebra-gelo.</p></div></div>
+                <div class="timeline-item"><div class="timeline-number">2</div><div class="timeline-content"><h4>Enquadramento</h4><p>Anuncie o objetivo (Estratégia PSP).</p></div></div>
+                <div class="timeline-item"><div class="timeline-number">3</div><div class="timeline-content"><h4>Desenvolvimento</h4><p>Sondagem + Pitch + Fechamento.</p></div></div>
+                <div class="timeline-item"><div class="timeline-number">4</div><div class="timeline-content"><h4>Recordatório</h4><p>VA e Mensagem (Máx 4 produtos).</p></div></div>
+                <div class="timeline-item"><div class="timeline-number">5</div><div class="timeline-content"><h4>Sampling</h4><p>Entrega de amostras.</p></div></div>
+                <div class="timeline-item"><div class="timeline-number">6</div><div class="timeline-content"><h4>Encerramento</h4><p>Colocar-se à disposição.</p></div></div>
+            </div>
+        </div>
+
+        <div id="conclusao" class="sales-tab-content">
+            <h2>Conclusão do Contato</h2>
+            <p>Atingiu o objetivo?</p>
+            <div class="d-container">
+                <div class="d-card" style="border-color: #a5d6a7; background: #e8f5e9;">
+                    <span class="d-title" style="color: #2e7d32;">1. Auto Feedback</span>
+                    <p style="font-size:0.9em;">Segui o roteiro? Contornei objeções?</p>
+                </div>
+                <div class="d-card" style="border-color: #ffcc80; background: #fff3e0;">
+                    <span class="d-title" style="color: #ef6c00;">2. Registros (CRM)</span>
+                    <p style="font-size:0.9em;">Oficializar visita e amostras.</p>
+                </div>
+            </div>
         </div>
     </div>
-
     <div id="produtos" class="tab-content">
         <h2>Focos e Roteiros</h2>
         <p style="text-align:center; margin-bottom:20px; color:#666;">Selecione o produto foco abaixo:</p>
@@ -522,70 +611,6 @@
         </div>
     </div>
 
-    <div id="perguntas" class="tab-content">
-        <h2>Perguntas de Sondagem</h2>
-        <div class="question-card">
-            <h4>Alektos (Alergia)</h4>
-            <p>"Doutor, qual sua prioridade ao escolher um anti-histamínico: potência de ação ou perfil de segurança em pacientes polimedicados?"</p>
-        </div>
-        <div class="question-card">
-            <h4>Kelac (Dor)</h4>
-            <p>"Quando o anti-inflamatório comum não segura a dor, qual sua conduta antes do opioide?"</p>
-        </div>
-        <div class="question-card">
-            <h4>Descon (Gripe)</h4>
-            <p>"Como o senhor maneja sintomas gripais em pacientes que dirigem e não podem ter sonolência?"</p>
-        </div>
-    </div>
-
-    <div id="objecoes" class="tab-content">
-        <h2>Tratamento de Objeções (3 D's)</h2>
-        <div class="d-container">
-            <div class="d-card">
-                <span class="d-letter">D</span>
-                <span class="d-title">Desconhece</span>
-                <div class="solution-box"><strong>Ação: Educar.</strong> "Sabia que Alektos é nota 10 no ARIA e age em 1h?"</div>
-            </div>
-            <div class="d-card">
-                <span class="d-letter">D</span>
-                <span class="d-title">Desconfia</span>
-                <div class="solution-box"><strong>Ação: Investigar.</strong> "Em que perfil de paciente o senhor teve receio com segurança?"</div>
-            </div>
-            <div class="d-card">
-                <span class="d-letter">D</span>
-                <span class="d-title">Desvantagem</span>
-                <div class="solution-box"><strong>Ação: Ressignificar.</strong> "O custo é mais acessível que as referências Fexo e Deslora."</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="estrutura" class="tab-content">
-        <h2>Passo a Passo da Visita</h2>
-        <div class="timeline">
-            <div class="timeline-item"><div class="timeline-number">1</div><div class="timeline-content"><h4>Conexão</h4><p>Rapport e Quebra-gelo.</p></div></div>
-            <div class="timeline-item"><div class="timeline-number">2</div><div class="timeline-content"><h4>Enquadramento</h4><p>Anuncie o objetivo (Estratégia PSP).</p></div></div>
-            <div class="timeline-item"><div class="timeline-number">3</div><div class="timeline-content"><h4>Desenvolvimento</h4><p>Sondagem + Pitch + Fechamento.</p></div></div>
-            <div class="timeline-item"><div class="timeline-number">4</div><div class="timeline-content"><h4>Recordatório</h4><p>VA e Mensagem (Máx 4 produtos).</p></div></div>
-            <div class="timeline-item"><div class="timeline-number">5</div><div class="timeline-content"><h4>Sampling</h4><p>Entrega de amostras.</p></div></div>
-            <div class="timeline-item"><div class="timeline-number">6</div><div class="timeline-content"><h4>Encerramento</h4><p>Colocar-se à disposição.</p></div></div>
-        </div>
-    </div>
-
-    <div id="conclusao" class="tab-content">
-        <h2>Conclusão do Contato</h2>
-        <p>Atingiu o objetivo?</p>
-        <div class="d-container">
-            <div class="d-card" style="border-color: #a5d6a7; background: #e8f5e9;">
-                <span class="d-title" style="color: #2e7d32;">1. Auto Feedback</span>
-                <p style="font-size:0.9em;">Segui o roteiro? Contornei objeções?</p>
-            </div>
-            <div class="d-card" style="border-color: #ffcc80; background: #fff3e0;">
-                <span class="d-title" style="color: #ef6c00;">2. Registros (CRM)</span>
-                <p style="font-size:0.9em;">Oficializar visita e amostras.</p>
-            </div>
-        </div>
-    </div>
-
     <div id="auditorias" class="tab-content">
         <h2>Principais Auditorias de Mercado</h2>
         <p>Entenda as ferramentas para analisar Demanda e Prescrição.</p>
@@ -647,6 +672,27 @@
                 <div class="nddd-item">
                     <strong>Comparativo de Produto</strong>
                     <span><em>Performance</em> do produto dentro do mercado.</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="medmetrics-highlight">
+            <h4>MedMetrics - Visão Categoria</h4>
+            <p class="medmetrics-desc">
+                Nessa visão é possível observar o comportamento dos médicos dentro de um determinado mercado.
+            </p>
+            <div class="medmetrics-grid">
+                <div class="medmetrics-item">
+                    <strong>Comportamento Médico</strong>
+                    <span>Análise individual por CRM/Nome do médico e sua especialidade.</span>
+                </div>
+                <div class="medmetrics-item">
+                    <strong>Indicadores de Performance</strong>
+                    <span>Acompanhamento de %MS Atual, Penetração (p.p.) e PX.</span>
+                </div>
+                <div class="medmetrics-item">
+                    <strong>Segmentação</strong>
+                    <span>Filtros dinâmicos: Bullseye (Categoria), Status de Visitação e Setor.</span>
                 </div>
             </div>
         </div>
@@ -720,11 +766,40 @@
                     </div>
                 </a>
 
-                <a href="https://hypermarcas.sharepoint.com/sites/excelencia-comercial?&xsdata=MDV8MDJ8fDZiYjM1OTY0YTZhYjRhY2ZlYzA1MDhkZTU5MTMzNTI2fDNmN2EzZGY0Zjg1YjRjYTg5OGQwMDhiMTAzNGU2NTY3fDB8MHw2MzkwNDYxMzYxNjQxODMwNDV8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKRFFTSTZJbFJsWVcxelgwRlVVRk5sY25acFkyVmZVMUJQVEU5R0lpd2lWaUk2SWpBdU1DNHdNREF3SWl3aVVDSTZJbGRwYmpNeUlpd2lRVTRpT2lKUGRHaGxjaUlzSWxkVUlqb3hNWDA9fDF8TDJOb1lYUnpMekU1T20xbFpYUnBibWRmV20xUmQwMVVUbWhhVkVsMFRXMVNhRTVUTURCT1ZHdDVURlJyZVUweVNYUk5SRWt5VG1wak5WbFVVVEpOUkdSclFIUm9jbVZoWkM1Mk1pOXRaWE56WVdkbGN5OHhOelk1TURFMk9ERTBNems0fGFiMWFlNzc3MTZkMjQwMjI4OWMzMDhkZTU5MTMzNTI0fGExYjNhMmJjODVhYzQwNmVhOTVhZTQxOTNkZDc3Yzc4&sdata=Q0c1SytmcUdTa2RYaTBDNDRVbmxXMEl6M2I3SWdCZThWWW5pYmE4MkJjbz0%3D&ovuser=3f7a3df4-f85b-4ca8-98d0-08b1034e6567%2Cfranklin.ferreira%40hypera.com.br&OR=Teams-HL&CT=1769017724600&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIxNDE1LzI1MTEzMDAxMzEyIn0%3D" target="_blank" class="link-btn">
+                <a href="https://hypermarcas.sharepoint.com/sites/excelencia-comercial?&xsdata=MDV8MDJ8fDZiYjM1OTY0YTZhYjRhY2ZlYzA1MDhkZTU5MTMzNTI2fDNmN2EzZGY0Zjg1YjRjYTg5OGQwMDhiMTAzNGU2NTY3fDB8MHw2MzkwNDYxMzYxNjQxODMwNDV8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKRFFTSTZJbFJsWVcxelgwRlVVRk5sY25acFkyVmZVMUJQVEU5R0lpd2lWaUk2SWpBdU1DNHdNREF3SWl3aVVDSTZJbGRwYmpNeUlpd2lRVTRpT2lKUGRHaGxjaUlzSWxkVUlqb3hNWDA9fDF8TDJOb1lYUnpMekU1T20xbFpYUnBibWRmV20xUmQwMVVUbWhhVkVsMFRXMVNhRTVUTURCT1ZHdDVURlJyZVUweVNYUk5SRWt5VG1wak5WbFVVVEpOUkdSclFIUm9jbVZoWkM1Mk1pOXRaWE56WVdkbGN5OHhOelk1TURFMk9ERTBNems0fGFiMWFlNzc3MTZkMjQwMjI4OWMzMDhkZTU5MTMzNTI0fGExYjNhMmJjODVhYzQwNmVhOTVhZTQxOTNkZDc3Yzc4&sdata=Q0c1SytmcUdTa2RYaTBDNDRVbmxXMEl6M2I3SWdCZThWWW5pYmE4MkJjbz0%3D&ovuser=3f7a3df4-f85b-4ca8-98d0-08b1034e6567%2Cfranklin.ferreira%40hypera.com.br&OR=Teams-HL&CT=1769017724600&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIxNDE1LzI1MTEzMDAxMzEyIn0%3d" target="_blank" class="link-btn">
                     <span class="link-icon">🌐</span>
                     <div class="link-info">
                         <h4>Portal HUB</h4>
                         <p>Excelência Comercial Home</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="link-group">
+            <h3>RH & Serviços Corporativos</h3>
+            <div class="link-grid">
+                <a href="https://hyperastar.com.br/" target="_blank" class="link-btn">
+                    <span class="link-icon">⭐</span>
+                    <div class="link-info">
+                        <h4>Hyperastar</h4>
+                        <p>Portal de Incentivos</p>
+                    </div>
+                </a>
+
+                <a href="https://performancemanager4.successfactors.com/sf/home?bplte_company=RHGENTEGESTAO&_s.crb=Yy%2bLBNuL5EG%2bSArUpEOxRoDhVJeDYpPzOGV%2bRUIZUD4%3d" target="_blank" class="link-btn">
+                    <span class="link-icon">👥</span>
+                    <div class="link-info">
+                        <h4>Gente e Gestão</h4>
+                        <p>Portal RH (SuccessFactors)</p>
+                    </div>
+                </a>
+
+                <a href="https://suporteprd.service-now.com/hyperapharma?id=pagina_catalogo&parent=2245bb351b4b4290f945dca0f54bcb14&category=2245bb351b4b4290f945dca0f54bcb14" target="_blank" class="link-btn">
+                    <span class="link-icon">🛠️</span>
+                    <div class="link-info">
+                        <h4>Suporte Hypera</h4>
+                        <p>Abertura de Chamados</p>
                     </div>
                 </a>
             </div>
@@ -772,7 +847,7 @@
 </div>
 
 <script>
-    // Função para as Abas Principais
+    // Função para as Abas Principais (Técnicas, Produtos, Auditorias...)
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tab-content");
@@ -789,20 +864,43 @@
         evt.currentTarget.className += " active";
     }
 
-    // Função para as Sub-Abas (Dentro de Produtos)
+    // Função para as Sub-Abas de PRODUTOS
     function openSubTab(evt, subTabName) {
         var i, subtabcontent, subtablinks;
+        // Pega apenas as sub-abas de produtos
         subtabcontent = document.getElementsByClassName("sub-tab-content");
         for (i = 0; i < subtabcontent.length; i++) {
             subtabcontent[i].style.display = "none";
             subtabcontent[i].classList.remove("active");
         }
-        subtablinks = document.getElementsByClassName("sub-tab-btn");
+        // Pega botões do contexto atual
+        var parentBar = evt.currentTarget.parentElement;
+        subtablinks = parentBar.getElementsByClassName("sub-tab-btn");
         for (i = 0; i < subtablinks.length; i++) {
             subtablinks[i].className = subtablinks[i].className.replace(" active", "");
         }
         document.getElementById(subTabName).style.display = "block";
         document.getElementById(subTabName).classList.add("active");
+        evt.currentTarget.className += " active";
+    }
+
+    // NOVA: Função para as Sub-Abas de TÉCNICAS DE VENDAS
+    function openSalesTab(evt, salesTabName) {
+        var i, salescontent, saleslinks;
+        // Pega apenas as sub-abas de vendas
+        salescontent = document.getElementsByClassName("sales-tab-content");
+        for (i = 0; i < salescontent.length; i++) {
+            salescontent[i].style.display = "none";
+            salescontent[i].classList.remove("active");
+        }
+        // Pega botões do contexto atual
+        var parentBar = evt.currentTarget.parentElement;
+        saleslinks = parentBar.getElementsByClassName("sub-tab-btn");
+        for (i = 0; i < saleslinks.length; i++) {
+            saleslinks[i].className = saleslinks[i].className.replace(" active", "");
+        }
+        document.getElementById(salesTabName).style.display = "block";
+        document.getElementById(salesTabName).classList.add("active");
         evt.currentTarget.className += " active";
     }
 
