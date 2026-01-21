@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Hyperselling: Kelac, Descon & Alektos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        header {
+            background-color: #b71c1c; /* Vermelho Pharma */
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 26px; }
+        header p { margin: 5px 0 0; opacity: 0.9; }
+
+        /* Estilo das Abas de Navegação Principal */
+        .tab-bar {
+            display: flex;
+            background-color: #eee;
+            border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 15px 5px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            transition: 0.3s;
+            border-bottom: 4px solid transparent;
+            min-width: 100px;
+        }
+        .tab-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .tab-btn.active {
+            color: #b71c1c;
+            border-bottom: 4px solid #b71c1c;
+            background-color: #fff;
+        }
+
+        /* Conteúdo das Abas */
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.4s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* --- SUB-ABAS (PRODUTOS) --- */
+        .sub-tab-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .sub-tab-btn {
+            padding: 10px 25px;
+            border: 1px solid #b71c1c;
+            background-color: white;
+            color: #b71c1c;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+        .sub-tab-btn:hover {
+            background-color: #ffebee;
+        }
+        .sub-tab-btn.active {
+            background-color: #b71c1c;
+            color: white;
+            box-shadow: 0 4px 6px rgba(183, 28, 28, 0.3);
+        }
+        .sub-tab-content {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+        .sub-tab-content.active {
+            display: block;
+        }
+
+        /* --- BOTÕES INTERNOS (DAVIDA vs ROTEIROS) --- */
+        .internal-toggle-bar {
+            display: flex;
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #bbdefb;
+        }
+        .internal-toggle-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: none;
+            color: #1565c0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .internal-toggle-btn.active {
+            background: white;
+            color: #0d47a1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .internal-section { display: none; animation: fadeIn 0.3s; }
+        .internal-section.active { display: block; }
+
+        /* ESTILOS DAVIDA */
+        .davida-item { margin-bottom: 15px; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .davida-title { color: #0d47a1; font-weight: bold; display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.9em; letter-spacing: 0.5px; }
+        .davida-content { color: #444; font-size: 0.95em; line-height: 1.5; }
+        .davida-list { padding-left: 20px; margin: 5px 0; }
+        .davida-list li { margin-bottom: 3px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Elementos Gerais */
+        h2 { color: #b71c1c; border-left: 5px solid #b71c1c; padding-left: 10px; margin-top: 0; }
+        h3 { color: #444; margin-top: 25px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        
+        /* Box Conceito */
+        .box-concept {
+            background: #f9f9f9;
+            border-left: 4px solid #555;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+            margin-right: 5px;
+        }
+        .badge-p { background-color: #2e7d32; }
+        .badge-s { background-color: #c62828; }
+
+        /* Roteiros e Diálogos */
+        .script-box {
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .dialogue { margin-bottom: 15px; line-height: 1.6; }
+        .dialogue strong { color: #0d47a1; }
+        .note { font-size: 0.9em; color: #666; font-style: italic; margin-bottom: 5px; font-weight: bold; }
+        
+        .product-highlight-box {
+            background-color: #fff8e1;
+            border: 1px solid #ffecb3;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .highlight-title { color: #f57f17; font-weight: bold; margin-bottom: 5px; display:block;}
+
+        /* Perguntas e 3Ds */
+        .question-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ff9800;
+        }
+        .question-card h4 { margin: 0 0 5px 0; color: #e65100; font-size: 1em; }
+        
+        .d-container { display: flex; gap: 15px; flex-wrap: wrap; }
+        .d-card {
+            flex: 1;
+            min-width: 250px;
+            background: #ffebee;
+            border: 1px solid #ffcdd2;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .d-letter {
+            font-size: 50px;
+            font-weight: bold;
+            color: #c62828;
+            display: block;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        .d-title { font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 10px; color: #b71c1c;}
+        .solution-box { margin-top: 15px; background: white; padding: 10px; border-radius: 5px; text-align: left; border: 1px dashed #c62828; }
+
+        /* Timeline Estrutura */
+        .timeline { position: relative; margin-top: 20px; }
+        .timeline-item { display: flex; margin-bottom: 25px; position: relative; }
+        .timeline-number {
+            background: #b71c1c; color: white; width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 20px; flex-shrink: 0; z-index: 2;
+        }
+        .timeline-content { background: #fafafa; border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; width: 100%; }
+        .timeline-item::after {
+            content: ''; position: absolute; left: 20px; top: 40px; bottom: -30px; width: 2px; background: #e0e0e0; z-index: 1;
+        }
+        .timeline-item:last-child::after { display: none; }
+
+        /* AUDITORIAS & CAT */
+        .audit-section-title {
+            background-color: #333;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .audit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .audit-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border-top: 4px solid #ccc;
+        }
+        .audit-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .audit-hot { border-top: 4px solid #d32f2f; background: #fffbfb; }
+        .audit-hot h4 { color: #c62828; }
+        .audit-card h4 { margin: 0 0 10px 0; font-size: 1.2em; color: #444; }
+        .audit-list { list-style: none; padding: 0; margin: 0; font-size: 0.9em; color: #555; }
+        .audit-list li { margin-bottom: 8px; padding-left: 15px; position: relative; }
+        .audit-list li::before { content: "•"; position: absolute; left: 0; color: #b71c1c; font-weight: bold; }
+        .audit-users { margin-top: 15px; padding-top: 10px; border-top: 1px dashed #ddd; font-size: 0.85em; color: #777; font-style: italic; }
+
+        /* NDDD GERENCIAL BOX */
+        .nddd-highlight {
+            background: #fff8e1; /* Fundo amarelo claro */
+            border: 2px solid #ff6f00;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .nddd-highlight h4 { color: #e65100; margin-top: 0; font-size: 1.4em; border-bottom: 1px solid #ffe082; padding-bottom: 10px; margin-bottom: 15px; }
+        .nddd-desc { font-style: italic; color: #5d4037; margin-bottom: 20px; line-height: 1.5; }
+        .nddd-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+        .nddd-item { flex: 1; min-width: 220px; background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #ff8f00; }
+        .nddd-item strong { color: #e65100; display: block; margin-bottom: 5px; font-size: 0.95em; text-transform: uppercase; }
+        .nddd-item span { color: #555; font-size: 0.9em; }
+
+        /* ESTILOS PARA NOVA ABA CAT (PIRÂMIDE) */
+        .cat-pillars { display: flex; gap: 15px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+        .cat-pill {
+            background: #f5f5f5; padding: 12px 20px; border-radius: 50px; border: 1px solid #ddd;
+            display: flex; align-items: center; gap: 10px; font-size: 0.95em; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .cat-label { background: #d32f2f; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; }
+        
+        .pyramid-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; position: relative; }
+        .pyramid-level {
+            color: white; text-align: center; padding: 12px; margin-bottom: 3px; font-weight: bold;
+            font-size: 1.1em; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.2s; cursor: default;
+        }
+        .pyramid-level:hover { transform: scale(1.02); }
+        .level-1 { width: 30%; background-color: #3b0a0a; } 
+        .level-2 { width: 45%; background-color: #681212; }
+        .level-3 { width: 60%; background-color: #8b1a1a; }
+        .level-4 { width: 75%; background-color: #b71c1c; }
+        .level-5 { width: 90%; background-color: #e53935; } 
+        .cat-legend { text-align: center; margin-top: 20px; font-size: 0.9em; color: #666; font-style: italic; }
+
+        /* ESTILOS PARA ABA LINKS */
+        .link-group { margin-bottom: 25px; }
+        .link-group h3 { border-bottom: 2px solid #b71c1c; padding-bottom: 5px; margin-bottom: 15px; }
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .link-btn {
+            display: flex; align-items: center; padding: 15px; background: white; border: 1px solid #ddd; border-radius: 8px;
+            text-decoration: none; color: #444; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .link-btn:hover { background: #f9f9f9; border-color: #b71c1c; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .link-icon { font-size: 24px; margin-right: 15px; }
+        .link-info h4 { margin: 0 0 5px 0; font-size: 1em; color: #b71c1c; }
+        .link-info p { margin: 0; font-size: 0.85em; color: #666; }
+
+        /* Botão Imprimir */
+        .btn-print {
+            display: block; width: 100%; padding: 15px; background: #333; color: white;
+            text-align: center; text-decoration: none; font-size: 16px; font-weight: bold; margin-top: 0;
+        }
+        .btn-print:hover { background: #555; }
+        
+        @media print {
+            .btn-print, .tab-bar, .sub-tab-bar, .internal-toggle-bar { display: none; }
+            .tab-content, .sub-tab-content, .internal-section { display: block !important; border-bottom: 2px solid #000; page-break-after: always; }
+            .audit-card, .pyramid-container, .link-grid, .nddd-highlight { break-inside: avoid; }
+            .link-btn { border: 1px solid #000; }
+            .internal-section { display: block !important; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Guia Prático Hyperselling</h1>
+        <p>Planejamento de Contato: Kelac, Descon & Alektos</p>
+    </header>
+
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="openTab(event, 'conceito')">1. Resumo PSP</button>
+        <button class="tab-btn" onclick="openTab(event, 'produtos')">2. Produtos</button>
+        <button class="tab-btn" onclick="openTab(event, 'perguntas')">3. Perguntas</button>
+        <button class="tab-btn" onclick="openTab(event, 'objecoes')">4. Objeções (3D's)</button>
+        <button class="tab-btn" onclick="openTab(event, 'estrutura')">5. Estrutura Visita</button>
+        <button class="tab-btn" onclick="openTab(event, 'conclusao')">6. Conclusão</button>
+        <button class="tab-btn" onclick="openTab(event, 'auditorias')">7. Auditorias</button>
+        <button class="tab-btn" onclick="openTab(event, 'cat')">8. Categorização (CAT)</button>
+        <button class="tab-btn" onclick="openTab(event, 'links')">9. Links Importantes</button>
+    </div>
+
+    <div id="conceito" class="tab-content active">
+        <h2>A Lógica do PSP</h2>
+        <p>Organize a energia da visita para garantir segurança.</p>
+        
+        <div class="box-concept">
+            <span class="badge badge-p">P - POSITIVO</span> Início: Fale do produto que ele JÁ usa.
+        </div>
+        <div class="box-concept">
+            <span class="badge badge-s">S - SENSÍVEL</span> Meio: A venda real. Sondagem + Pitch.
+        </div>
+        <div class="box-concept">
+            <span class="badge badge-p">P - POSITIVO</span> Fim: Retorno ao produto seguro.
+        </div>
+
+        <div style="background: #fff3e0; padding: 15px; border: 1px solid #ffb74d; text-align: center; border-radius: 5px;">
+            ⚠️ <strong>Regra de Ouro:</strong> "CONFIRMAR sem AGRADECER"
+        </div>
+    </div>
+
+    <div id="produtos" class="tab-content">
+        <h2>Focos e Roteiros</h2>
+        <p style="text-align:center; margin-bottom:20px; color:#666;">Selecione o produto foco abaixo:</p>
+
+        <div class="sub-tab-bar">
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'sub_kelac')">Foco KELAC</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'sub_descon')">Foco DESCON</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'sub_alektos')">Foco ALEKTOS</button>
+            <button class="sub-tab-btn active" onclick="openSubTab(event, 'sub_alektos_ped')">Foco ALEKTOS PED</button>
+        </div>
+
+        <div id="sub_alektos" class="sub-tab-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 style="margin:0;">ALEKTOS (Bilastina)</h3>
+                <span style="background:#e3f2fd; color:#0d47a1; padding:5px 10px; border-radius:15px; font-weight:bold; font-size:0.9em;">Dose: 1x ao dia</span>
+            </div>
+            <div class="internal-toggle-bar">
+                <button class="internal-toggle-btn active" onclick="toggleInternal(event, 'alektos_davida', 'alektos_group')">📘 Ficha Técnica (DAVIDA)</button>
+                <button class="internal-toggle-btn" onclick="toggleInternal(event, 'alektos_roteiros', 'alektos_group')">🗣️ Roteiros de Abordagem</button>
+            </div>
+            <div id="alektos_davida" class="internal-section alektos_group active">
+                <div class="davida-item"><span class="davida-title">Descrição</span><div class="davida-content">Anti-histamínico de segunda geração é altamente seletivo, atuando especificamente nos receptores periféricos da histamina, sem causar efeitos sedativos ou cardiotóxicos.</div></div>
+                <div class="davida-item"><span class="davida-title">Ação / Ativos</span><div class="davida-content">A Bilastina tem ação anti-histamínica no controle dos sintomas da rinite alérgica e urticária.</div></div>
+                <div class="davida-item"><span class="davida-title">Vantagens</span><ul class="davida-content davida-list"><li>1. Rápido início de ação;</li><li>2. Possui efeito prolongado;</li><li>3. Possui maior afinidade pelo receptor H1;</li><li>4. Superior aos outros AHS;</li><li>5. Não provoca sono;</li><li>6. Não causa alterações psicomotoras;</li><li>7. Não possui metabolização hepática;</li><li>8. Não possui cardiotoxicidade;</li><li>9. Seguro a longo prazo;</li><li>10. Possui maior acessibilidade ao paciente.</li></ul></div>
+                <div class="davida-item"><span class="davida-title">Indicações</span><div class="davida-content">Indicado para o tratamento dos sintomas da rinoconjuntivite alérgica e urticária crônica.</div></div>
+                <div class="davida-item"><span class="davida-title">Dose / Posologia</span><div class="davida-content">1 x ao dia (DOSE ÚNICA).</div></div>
+                <div class="davida-item"><span class="davida-title">Apresentações</span><div class="davida-content">Alektos com 20 ou 30 comprimidos.</div></div>
+                <div class="davida-item" style="border-bottom:none;"><span class="davida-title" style="color:#c62828;">Concorrentes</span><div class="davida-content">Allegra (Fexofenadina), Desalex (Desloratadina), Esalerg (Desloratadina) e Ebastel (Ebastina).</div></div>
+            </div>
+            <div id="alektos_roteiros" class="internal-section alektos_group">
+                <div class="product-highlight-box"><span class="highlight-title">Mensagem Essencial</span><p style="margin:0;">O mais moderno anti-histamínico de 2ª geração. Altamente seletivo, sem causar sedação ou cardiotoxicidade.</p></div>
+                <div class="script-box"><div class="note" style="color:#d32f2f;">Cenário: Prescritor de ALLEGRA (Fexofenadina)</div><div class="dialogue"><strong>Você:</strong> "Doutor, o Alektos é o único anti-histamínico com nota máxima (10) no consenso mundial ARIA, superando a fexofenadina (nota 9)."</div></div>
+                <div class="script-box"><div class="note" style="color:#d32f2f;">Cenário: Prescritor de DESALEX (Desloratadina)</div><div class="dialogue"><strong>Você:</strong> "Doutor, Alektos obteve nota 10 no ARIA, ficando à frente de moléculas como a Desloratadina (nota 6)."</div></div>
+            </div>
+        </div>
+
+        <div id="sub_alektos_ped" class="sub-tab-content active">
+             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 style="margin:0;">ALEKTOS PED (Bilastina)</h3>
+                <span style="background:#e3f2fd; color:#0d47a1; padding:5px 10px; border-radius:15px; font-weight:bold; font-size:0.9em;">Dose: 1x ao dia (4mL)</span>
+            </div>
+            <div class="internal-toggle-bar">
+                <button class="internal-toggle-btn active" onclick="toggleInternal(event, 'alektos_ped_davida', 'alektos_ped_group')">📘 Ficha Técnica (DAVIDAC)</button>
+                <button class="internal-toggle-btn" onclick="toggleInternal(event, 'alektos_ped_roteiros', 'alektos_ped_group')">🗣️ Roteiros de Abordagem</button>
+            </div>
+            <div id="alektos_ped_davida" class="internal-section alektos_ped_group active">
+                <div class="davida-item">
+                    <span class="davida-title">Descrição</span>
+                    <div class="davida-content">Anti-histamínico de segunda geração altamente seletivo, atuando especificamente nos receptores periféricos da histamina, sem causar efeitos sedativos.</div>
+                </div>
+                 <div class="davida-item">
+                    <span class="davida-title">Ação / Ativos</span>
+                    <div class="davida-content">A Bilastina tem ação anti-histamínica no controle dos sintomas da rinite alérgica e urticária.</div>
+                </div>
+                <div class="davida-item">
+                    <span class="davida-title">Vantagens</span>
+                    <div class="davida-content">
+                        1. O mais moderno anti-histamínico, lançado em 2021, único da classe com Nota 10 no consenso mundial (ARIA).<br>
+                        2. Posologia simplificada de 1x ao dia.<br>
+                        3. Estudos comprovam superioridade vs Fexofenadina, Desloratadina e Hidroxizina em eficácia e segurança.
+                    </div>
+                </div>
+                <div class="davida-item">
+                    <span class="davida-title">Características & Benefícios</span>
+                    <div class="product-highlight-box" style="margin-top:5px;">
+                        <span class="highlight-title">4 Benefícios em 4mL:</span>
+                        <ul class="davida-list" style="font-weight:bold;">
+                            <li>1. Dose única diária</li>
+                            <li>2. Baixo volume (4mL)</li>
+                            <li>3. Sem açúcar</li>
+                            <li>4. Sabor agradável de Framboesa</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="davida-item">
+                    <span class="davida-title">Indicações</span>
+                    <div class="davida-content">Tratamento sintomático da rinoconjuntivite alérgica (espirros, congestão, etc) e urticária crônica em crianças de 6 aos 11 anos com peso corporal de pelo menos 20 kg.</div>
+                </div>
+                 <div class="davida-item">
+                    <span class="davida-title">Dose / Posologia</span>
+                    <div class="davida-content">4 mL, 1 x ao dia (DOSE ÚNICA). Acompanha copo dosador.</div>
+                </div>
+                <div class="davida-item">
+                    <span class="davida-title">Apresentações</span>
+                    <div class="davida-content">Solução oral 2,5 mg/mL de bilastina, frasco com 120 mL.</div>
+                </div>
+                <div class="davida-item" style="border-bottom:none;">
+                    <span class="davida-title" style="color:#c62828;">Concorrentes</span>
+                    <div class="davida-content">Allegra Pediátrico (Fexofenadina), Hixizine (Hidroxizina), Desalex (Desloratadina), Esalerg (Desloratadina) e Ebastel (Ebastina).</div>
+                </div>
+            </div>
+            <div id="alektos_ped_roteiros" class="internal-section alektos_ped_group">
+                <div class="script-box">
+                    <div class="note" style="color:#d32f2f;">Cenário: Prescritor de DESLORATADINA (Desalex/Esalerg)</div>
+                    <div class="dialogue"><strong>Você:</strong> "Doutor, Alektos Ped é o único com nota máxima (10) no consenso ARIA, superando a Desloratadina (nota 6). Por ser de 2ª geração, não provoca sono e é seguro a partir de 2 anos."</div>
+                </div>
+                <div class="script-box">
+                    <div class="note" style="color:#d32f2f;">Cenário: Prescritor de FEXOFENADINA (Allegra Ped)</div>
+                    <div class="dialogue"><strong>Você:</strong> "Doutor, facilitamos a vida da mãe com a dose única diária de 4mL, enquanto a fexofenadina exige duas doses. Além disso, Alektos Ped não possui açúcar, diferentemente do concorrente."</div>
+                </div>
+                <div class="script-box">
+                    <div class="note" style="color:#d32f2f;">Cenário: Prescritor de HIDROXIZINA (Hixizine)</div>
+                    <div class="dialogue"><strong>Você:</strong> "Doutor, os anti-histamínicos de 1ª geração como Hidroxizina causam sono não reparador que afeta o desempenho escolar. Alektos Ped é moderno, nota 10 no ARIA e não seda."</div>
+                </div>
+                <div class="script-box" style="border-color:#ffa726; background:#fff3e0;">
+                    <div class="note" style="color:#ef6c00;">Objeção: Segurança / Bula (Resistência < 6 anos)</div>
+                    <div class="dialogue"><strong>Você:</strong> "Doutor, a bilastina já possui estudos comprovando segurança em crianças a partir de 2 anos, com índice de reação adversa igual ao placebo. Em países como o México, ela já é aprovada a partir dessa faixa etária."</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sub_kelac" class="sub-tab-content">
+            <h3 style="margin-top:0;">Cenário: Introduzir KELAC</h3>
+            <p><em>Situação: O médico usa Descon (Gripe), mas analgésico concorrente.</em></p>
+            <div class="script-box">
+                <div class="note">1. Positivo (Descon)</div>
+                <div class="dialogue"><strong>Você:</strong> "Doutor, sua preferência pelo Descon é excelente para alívio sem sonolência."</div>
+                <hr style="border:0; border-top:1px dashed #ccc;">
+                <div class="note">2. Sensível (Kelac)</div>
+                <div class="dialogue"><strong>Você:</strong> "Para dor aguda intensa, o Kelac oferece potência de opioide via sublingual. Posso contar com 3 prescrições?"</div>
+                <hr style="border:0; border-top:1px dashed #ccc;">
+                <div class="note">3. Positivo (Retorno)</div>
+                <div class="dialogue"><strong>Você:</strong> "Ótimo. Garantimos o paciente sem dor com Kelac e tratado com Descon."</div>
+            </div>
+        </div>
+
+        <div id="sub_descon" class="sub-tab-content">
+            <h3 style="margin-top:0;">Cenário: Introduzir DESCON</h3>
+            <p><em>Situação: O médico usa Kelac (Dor), mas antigripal concorrente.</em></p>
+            <div class="script-box">
+                <div class="note">1. Positivo (Kelac)</div>
+                <div class="dialogue"><strong>Você:</strong> "O Kelac continua sendo o padrão-ouro na dor aguda."</div>
+                <hr style="border:0; border-top:1px dashed #ccc;">
+                <div class="note">2. Sensível (Descon)</div>
+                <div class="dialogue"><strong>Você:</strong> "Para gripe em pacientes ativos, o Descon resolve a congestão sem dar sono. O senhor concorda que produtividade é essencial?"</div>
+                <hr style="border:0; border-top:1px dashed #ccc;">
+                <div class="note">3. Positivo (Retorno)</div>
+                <div class="dialogue"><strong>Você:</strong> "Perfeito. Kelac na dor e Descon para o dia a dia."</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="perguntas" class="tab-content">
+        <h2>Perguntas de Sondagem</h2>
+        <div class="question-card">
+            <h4>Alektos (Alergia)</h4>
+            <p>"Doutor, qual sua prioridade ao escolher um anti-histamínico: potência de ação ou perfil de segurança em pacientes polimedicados?"</p>
+        </div>
+        <div class="question-card">
+            <h4>Kelac (Dor)</h4>
+            <p>"Quando o anti-inflamatório comum não segura a dor, qual sua conduta antes do opioide?"</p>
+        </div>
+        <div class="question-card">
+            <h4>Descon (Gripe)</h4>
+            <p>"Como o senhor maneja sintomas gripais em pacientes que dirigem e não podem ter sonolência?"</p>
+        </div>
+    </div>
+
+    <div id="objecoes" class="tab-content">
+        <h2>Tratamento de Objeções (3 D's)</h2>
+        <div class="d-container">
+            <div class="d-card">
+                <span class="d-letter">D</span>
+                <span class="d-title">Desconhece</span>
+                <div class="solution-box"><strong>Ação: Educar.</strong> "Sabia que Alektos é nota 10 no ARIA e age em 1h?"</div>
+            </div>
+            <div class="d-card">
+                <span class="d-letter">D</span>
+                <span class="d-title">Desconfia</span>
+                <div class="solution-box"><strong>Ação: Investigar.</strong> "Em que perfil de paciente o senhor teve receio com segurança?"</div>
+            </div>
+            <div class="d-card">
+                <span class="d-letter">D</span>
+                <span class="d-title">Desvantagem</span>
+                <div class="solution-box"><strong>Ação: Ressignificar.</strong> "O custo é mais acessível que as referências Fexo e Deslora."</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="estrutura" class="tab-content">
+        <h2>Passo a Passo da Visita</h2>
+        <div class="timeline">
+            <div class="timeline-item"><div class="timeline-number">1</div><div class="timeline-content"><h4>Conexão</h4><p>Rapport e Quebra-gelo.</p></div></div>
+            <div class="timeline-item"><div class="timeline-number">2</div><div class="timeline-content"><h4>Enquadramento</h4><p>Anuncie o objetivo (Estratégia PSP).</p></div></div>
+            <div class="timeline-item"><div class="timeline-number">3</div><div class="timeline-content"><h4>Desenvolvimento</h4><p>Sondagem + Pitch + Fechamento.</p></div></div>
+            <div class="timeline-item"><div class="timeline-number">4</div><div class="timeline-content"><h4>Recordatório</h4><p>VA e Mensagem (Máx 4 produtos).</p></div></div>
+            <div class="timeline-item"><div class="timeline-number">5</div><div class="timeline-content"><h4>Sampling</h4><p>Entrega de amostras.</p></div></div>
+            <div class="timeline-item"><div class="timeline-number">6</div><div class="timeline-content"><h4>Encerramento</h4><p>Colocar-se à disposição.</p></div></div>
+        </div>
+    </div>
+
+    <div id="conclusao" class="tab-content">
+        <h2>Conclusão do Contato</h2>
+        <p>Atingiu o objetivo?</p>
+        <div class="d-container">
+            <div class="d-card" style="border-color: #a5d6a7; background: #e8f5e9;">
+                <span class="d-title" style="color: #2e7d32;">1. Auto Feedback</span>
+                <p style="font-size:0.9em;">Segui o roteiro? Contornei objeções?</p>
+            </div>
+            <div class="d-card" style="border-color: #ffcc80; background: #fff3e0;">
+                <span class="d-title" style="color: #ef6c00;">2. Registros (CRM)</span>
+                <p style="font-size:0.9em;">Oficializar visita e amostras.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="auditorias" class="tab-content">
+        <h2>Principais Auditorias de Mercado</h2>
+        <p>Entenda as ferramentas para analisar Demanda e Prescrição.</p>
+
+        <span class="audit-section-title">Demanda (Venda/Estoque)</span>
+        <div class="audit-grid">
+            <div class="audit-card">
+                <h4>PMB</h4>
+                <ul class="audit-list">
+                    <li>Todos os produtos do Mercado Farma BR.</li>
+                    <li>Nível: Brasil e Região.</li>
+                    <li>Canal: Farmácia.</li>
+                    <li>Dados mensais de 60 meses.</li>
+                </ul>
+                <div class="audit-users">Usuários: MKT e Planejamento.</div>
+            </div>
+
+            <div class="audit-card audit-hot">
+                <h4>NDDD</h4>
+                <ul class="audit-list">
+                    <li>Mercados Selecionados (Promovidos).</li>
+                    <li>Nível: <strong>Brick</strong>.</li>
+                    <li>Canais: Farmácia, Hospitalar e outros.</li>
+                    <li>Dados mensais de 24 meses.</li>
+                </ul>
+                <div class="audit-users">Usuários: MKT, FV Propag. Médica.</div>
+            </div>
+
+            <div class="audit-card audit-hot">
+                <h4>MDTR</h4>
+                <ul class="audit-list">
+                    <li>Somente Produtos Hypera.</li>
+                    <li>Nível: <strong>CNPJ</strong>.</li>
+                    <li>Canais: Farma, Hospitalar, Transferências.</li>
+                    <li>Dados mensais (24 meses) e Prévias Semanais.</li>
+                </ul>
+                <div class="audit-users">Usuários: MKT, FV, Comercial, Trade.</div>
+            </div>
+        </div>
+
+        <div class="nddd-highlight">
+            <h4>NDDD Gerencial - Dados de Distribuição de Drogas</h4>
+            <p class="nddd-desc">
+                O NDDD Gerencial é de grande utilidade para os gestores de força de vendas para acompanhamento de <em>performance</em> do produto dentro do mercado, onde a ferramenta permite diversos pontos importantes de análise.
+            </p>
+            <div class="nddd-grid">
+                <div class="nddd-item">
+                    <strong>Participação de Mercado</strong>
+                    <span>Acompanhamento de <em>market share</em> (MAT, YTD, Trimestre, Mês).</span>
+                </div>
+                <div class="nddd-item">
+                    <strong>Tendência de Mercado</strong>
+                    <span>Curva de crescimento Hypera vs Concorrente.</span>
+                </div>
+                <div class="nddd-item">
+                    <strong>Comparativo Crescimento</strong>
+                    <span>Crescimento Hypera vs Mercado.</span>
+                </div>
+                <div class="nddd-item">
+                    <strong>Comparativo de Produto</strong>
+                    <span><em>Performance</em> do produto dentro do mercado.</span>
+                </div>
+            </div>
+        </div>
+
+        <span class="audit-section-title">Prescrição (Receituário)</span>
+        <div class="audit-grid">
+            <div class="audit-card">
+                <h4>CLOSE-UP MKT</h4>
+                <ul class="audit-list">
+                    <li>Todos os produtos do Mercado Farma BR.</li>
+                    <li>Nível: Meso Região.</li>
+                    <li>Canal: Farmácia.</li>
+                    <li>Dados mensais de 60 meses.</li>
+                </ul>
+                <div class="audit-users">Usuários: MKT, Planejamento.</div>
+            </div>
+
+            <div class="audit-card audit-hot">
+                <h4>AUDIT</h4>
+                <ul class="audit-list">
+                    <li>Mercados Selecionados (Promovidos).</li>
+                    <li>Nível: <strong>CRM</strong>.</li>
+                    <li>Canal: Farma.</li>
+                    <li>Dados mensais de 24 meses.</li>
+                </ul>
+                <div class="audit-users">Usuários: MKT, FV Propag. Médica.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cat" class="tab-content">
+        <h2>Categorização de Potencial Médico</h2>
+        <p>Definição estratégica do potencial e frequência de visita.</p>
+
+        <h3 style="text-align:center; border:none; margin-bottom:10px;">Exemplo dos Pilares da Categorização</h3>
+        <div class="cat-pillars">
+            <div class="cat-pill">
+                <span class="cat-label">Região</span> São Paulo
+            </div>
+            <div class="cat-pill">
+                <span class="cat-label">Mercado</span> Hipertensão (C09C)
+            </div>
+            <div class="cat-pill">
+                <span class="cat-label">Período</span> Último MAT
+            </div>
+        </div>
+
+        <h3 style="text-align:center; border:none;">Estrutura da Pirâmide CAT</h3>
+        <div class="pyramid-container">
+            <div class="pyramid-level level-1">1</div>
+            <div class="pyramid-level level-2">2</div>
+            <div class="pyramid-level level-3">3</div>
+            <div class="pyramid-level level-4">4</div>
+            <div class="pyramid-level level-5">5</div>
+        </div>
+        <p class="cat-legend">Níveis de prioridade e potencial do painel médico.</p>
+    </div>
+
+    <div id="links" class="tab-content">
+        <h2>Links Importantes - Excelência Comercial</h2>
+        <p>Acesse rapidamente os portais e dashboards essenciais.</p>
+
+        <div class="link-group">
+            <h3>Portais Corporativos</h3>
+            <div class="link-grid">
+                <a href="https://hypermarcas.sharepoint.com/sites/excelencia-comercial?xsdata=MDV8MDJ8fGJkZDU1OTRjNjlmNTQxMTMyYzYxMDhkZTU5MTMzMzFifDNmN2EzZGY0Zjg1YjRjYTg5OGQwMDhiMTAzNGU2NTY3fDB8MHw2MzkwNDYxMzYxMjk4NTg2NTd8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKRFFTSTZJbFJsWVcxelgwRlVVRk5sY25acFkyVmZVMUJQVEU5R0lpd2lWaUk2SWpBdU1DNHdNREF3SWl3aVVDSTZJbGRwYmpNeUlpd2lRVTRpT2lKUGRHaGxjaUlzSWxkVUlqb3hNWDA9fDF8TDJOb1lYUnpMekU1T20xbFpYUnBibWRmV20xUmQwMVVUbWhhVkVsMFRXMVNhRTVUTURCT1ZHdDVURlJyZVUweVNYUk5SRWt5VG1wak5WbFVVVEpOUkdSclFIUm9jbVZoWkM1Mk1pOXRaWE56WVdkbGN5OHhOelk1TURFMk9ERXdORFl5fGU0Zjc3YTQ1YzBkYjRkOGFiYmE2MDhkZTU5MTMzMzFhfDFlMzFjN2Y2NzcxMDRiMjg5OGJkZGU1ZGEyM2ZlOWZk&sdata=RzZuMjNpWWNheXF6NVZqZFRseEVyUTRDNXVTMmQ2cDBBVTY2aGlLVHNaOD0%3d&ovuser=3f7a3df4-f85b-4ca8-98d0-08b1034e6567%2cfranklin.ferreira%40hypera.com.br&OR=Teams-HL&CT=1769016927156&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIxNDE1LzI1MTEzMDAxMzEyIn0%3d&SafelinksUrl=https%3a%2f%2fhypermarcas.sharepoint.com%2fsites%2fexcelencia-comercial" target="_blank" class="link-btn">
+                    <span class="link-icon">🏢</span>
+                    <div class="link-info">
+                        <h4>Excelência Comercial - Home</h4>
+                        <p>SharePoint Oficial</p>
+                    </div>
+                </a>
+
+                <a href="https://hypermarcas.sharepoint.com/sites/excelencia-comercial?&xsdata=MDV8MDJ8fDZiYjM1OTY0YTZhYjRhY2ZlYzA1MDhkZTU5MTMzNTI2fDNmN2EzZGY0Zjg1YjRjYTg5OGQwMDhiMTAzNGU2NTY3fDB8MHw2MzkwNDYxMzYxNjQxODMwNDV8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKRFFTSTZJbFJsWVcxelgwRlVVRk5sY25acFkyVmZVMUJQVEU5R0lpd2lWaUk2SWpBdU1DNHdNREF3SWl3aVVDSTZJbGRwYmpNeUlpd2lRVTRpT2lKUGRHaGxjaUlzSWxkVUlqb3hNWDA9fDF8TDJOb1lYUnpMekU1T20xbFpYUnBibWRmV20xUmQwMVVUbWhhVkVsMFRXMVNhRTVUTURCT1ZHdDVURlJyZVUweVNYUk5SRWt5VG1wak5WbFVVVEpOUkdSclFIUm9jbVZoWkM1Mk1pOXRaWE56WVdkbGN5OHhOelk1TURFMk9ERTBNems0fGFiMWFlNzc3MTZkMjQwMjI4OWMzMDhkZTU5MTMzNTI0fGExYjNhMmJjODVhYzQwNmVhOTVhZTQxOTNkZDc3Yzc4&sdata=Q0c1SytmcUdTa2RYaTBDNDRVbmxXMEl6M2I3SWdCZThWWW5pYmE4MkJjbz0%3D&ovuser=3f7a3df4-f85b-4ca8-98d0-08b1034e6567%2Cfranklin.ferreira%40hypera.com.br&OR=Teams-HL&CT=1769017724600&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIxNDE1LzI1MTEzMDAxMzEyIn0%3D" target="_blank" class="link-btn">
+                    <span class="link-icon">🌐</span>
+                    <div class="link-info">
+                        <h4>Portal HUB</h4>
+                        <p>Excelência Comercial Home</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="link-group">
+            <h3>Dashboards Power BI</h3>
+            <div class="link-grid">
+                <a href="https://app.powerbi.com/groups/c6698e9f-ce6a-4ae0-908f-f16e3ba707b6/reports/e4f00c7b-e214-420b-ac5d-3ac1ce7e2ae7/ReportSection86f501c8c06520d95072?experience=power-bi" target="_blank" class="link-btn">
+                    <span class="link-icon">📊</span>
+                    <div class="link-info">
+                        <h4>Power BI - MDTR</h4>
+                        <p>MDTR Semanal DM Parcial</p>
+                    </div>
+                </a>
+
+                <a href="https://app.powerbi.com/groups/c6698e9f-ce6a-4ae0-908f-f16e3ba707b6/reports/7cc67f91-bddb-4e2a-af50-9df61bb8a46e/ReportSectiona91263308d2a00b044be?experience=power-bi" target="_blank" class="link-btn">
+                    <span class="link-icon">🏅</span>
+                    <div class="link-info">
+                        <h4>Power BI - Dash Medalhas</h4>
+                        <p>Overview TIER - EC</p>
+                    </div>
+                </a>
+
+                <a href="https://app.powerbi.com/groups/c6698e9f-ce6a-4ae0-908f-f16e3ba707b6/reports/df2b4c34-e8f2-41db-958f-41d876461ba1/ReportSectioncdd00a538350672346ce?experience=power-bi" target="_blank" class="link-btn">
+                    <span class="link-icon">📈</span>
+                    <div class="link-info">
+                        <h4>Power BI - MedMetrics</h4>
+                        <p>Capa - MedMetrics</p>
+                    </div>
+                </a>
+
+                <a href="https://app.powerbi.com/groups/c6698e9f-ce6a-4ae0-908f-f16e3ba707b6/reports/048d603b-3152-4c4e-9df9-6e552640d91c/ReportSection83ac9d77e4236769698b?ctid=3f7a3df4-f85b-4ca8-98d0-08b1034e6567&experience=power-bi" target="_blank" class="link-btn">
+                    <span class="link-icon">📑</span>
+                    <div class="link-info">
+                        <h4>Power BI - NDDD</h4>
+                        <p>Atualizado 1x/mês</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" onclick="window.print();return false;" class="btn-print">🖨️ Imprimir Guia Completo</a>
+</div>
+
+<script>
+    // Função para as Abas Principais
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.className += " active";
+    }
+
+    // Função para as Sub-Abas (Dentro de Produtos)
+    function openSubTab(evt, subTabName) {
+        var i, subtabcontent, subtablinks;
+        subtabcontent = document.getElementsByClassName("sub-tab-content");
+        for (i = 0; i < subtabcontent.length; i++) {
+            subtabcontent[i].style.display = "none";
+            subtabcontent[i].classList.remove("active");
+        }
+        subtablinks = document.getElementsByClassName("sub-tab-btn");
+        for (i = 0; i < subtablinks.length; i++) {
+            subtablinks[i].className = subtablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(subTabName).style.display = "block";
+        document.getElementById(subTabName).classList.add("active");
+        evt.currentTarget.className += " active";
+    }
+
+    // Função genérica para alternar conteúdo interno (DAVIDA vs ROTEIROS)
+    function toggleInternal(evt, sectionId, groupClass) {
+        // Esconde todas as seções do grupo específico
+        var sections = document.getElementsByClassName(groupClass);
+        for (var i = 0; i < sections.length; i++) {
+            sections[i].classList.remove("active");
+        }
+        // Remove active dos botões do contexto
+        var parentBar = evt.currentTarget.parentElement;
+        var btns = parentBar.getElementsByClassName("internal-toggle-btn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].classList.remove("active");
+        }
+        // Ativa a seção selecionada e o botão
+        document.getElementById(sectionId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>
